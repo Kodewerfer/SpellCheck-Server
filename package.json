@@ -1,0 +1,26 @@
+{
+  "name": "spellchecker_server",
+  "version": "1.0.0",
+  "dependencies": {
+    "@tensorflow/tfjs": "^1.0.0",
+    "binary-reader": "^0.1.2",
+    "express": "^4.17.1",
+    "lodash": "^4.17.11",
+    "ramda": "^0.26.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "start": "nodemon --inspect app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "nodemon": "^1.18.10",
+    "rimraf": "^2.6.3"
+  }
+}
