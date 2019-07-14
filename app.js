@@ -1,5 +1,6 @@
 const _ = require('lodash'),
-  express = require('express')
+  express = require('express'),
+  cors = require('cors');
 
 const Dictionary = require('./dic/Dictionary'),
   wordCheck = require('./wordChecker'),
@@ -15,6 +16,8 @@ global.history = {};
 
 // static content
 app.use(express.static('./static/'));
+// enable cross origin access.
+app.use(cors());
 
 // build the default dictionary *async*
 // store in global.Dictionaries
