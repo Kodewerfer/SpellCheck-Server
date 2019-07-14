@@ -4,3 +4,4 @@ yarn-error.log
 static/text_lib/test.text
 package-lock.json
 yarn.lock
+testr.js
