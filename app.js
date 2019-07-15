@@ -1,6 +1,7 @@
 const _ = require('lodash'),
   express = require('express'),
-  cors = require('cors');
+  cors = require('cors'),
+  bodyParser = require('body-parser');
 
 const Dictionary = require('./dic/Dictionary'),
   wordCheck = require('./wordChecker'),
@@ -14,10 +15,13 @@ global.Dictionaries = null;
 // 
 global.history = {};
 
-// static content
-app.use(express.static('./static/'));
-// enable cross origin access.
-app.use(cors());
+
+app.use(express.static('./static/'));  // static content
+app.use(cors());  //enalbe cross original access.
+
+
+app.use(express.json()); // to support JSON-encoded bodies
+
 
 // build the default dictionary *async*
 // store in global.Dictionaries
@@ -34,31 +38,34 @@ buildDefaultDictionary();
 
 // request handler
 let lookUpHandler = (req, res) => {
-  // res.send('Done');
+  console.log('request received.');
 
-  let word = req.query.word;
-
+  // for GET and POST
+  let word = req.query.word||req.body.word;
   // shallow, indepth, thorough
-  let method = req.query.method;
+  let method = req.query.word||req.body.word;
 
   if (!method) {
     method = 'shallow'
   }
 
   if (!word) {
-    res.send('no word.');
+    res.json('no word.');
     return;
   }
 
   try {
-
+    console.log('looking up for word : ' + word);
     let { isFound, results } = wordCheck.checkUp(word);
 
     if (isFound) {
-      res.send("found");
+      console.info('word : ' + word + ' was found.');
+      res.json("found");
     } else {
+      console.error('word :' + word + ' not found. correcting word.');
       // res.send(wordCorrection.correct(word, results, method));
-      res.send(wordCorrection.correct(word, method));
+      // res.set('Content-Type', 'application/json');
+      res.json(wordCorrection.correct(word, method));
     }
 
   } catch (e) {
@@ -70,7 +77,7 @@ let lookUpHandler = (req, res) => {
     throw e;
   }
 
-
+  res.end();
 
 }
 

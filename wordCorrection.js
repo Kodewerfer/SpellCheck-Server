@@ -143,7 +143,6 @@ module.exports = {
 
       correction.push(candidatesSorted);
 
-      debugger;
     }
 
     return correction;
