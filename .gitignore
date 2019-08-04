@@ -1,7 +1,6 @@
 /node_modules
 /.vscode
-yarn-error.log
-static/text_lib/test.text
 package-lock.json
 yarn.lock
 testr.js
+static/text_lib/test.txt

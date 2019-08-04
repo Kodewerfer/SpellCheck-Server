@@ -27,6 +27,7 @@ let initDictionary = (words, ind) => {
 
 }
 
+// recursively adding each word into the dictionary.
 let initWordReference = (words, ind) => {
 
   if (!ind) {
@@ -109,7 +110,6 @@ class Dictionary {
 
   constructor(file) {
     this.baseFile = file
-    // this.hitCount = null;
     this.wordCount = 0;
     this.wordReference = null;
     return this;
@@ -127,32 +127,29 @@ class Dictionary {
         lineReading.on('line', (data) => {
 
           // remove all punctuations
-          let punctuationless = _.replace(data, /[\\\'\+\[\]\|<>?\-,\/#!$%\^&\*;:{}=\_`~()"“”]/g, "");
-          punctuationless = _.replace(punctuationless, /\s{2,}/g, " ");
-          punctuationless = _.replace(punctuationless, /\./g, "");
-          punctuationless = punctuationless.toLocaleLowerCase();
+          let punctuationlessLine = _.replace(data, /[\\\'\+\[\]\|<>?\-,\/#!$%\^&\*;:{}=\_`~()"“”]/g, "");
+          punctuationlessLine = _.replace(punctuationlessLine, /\s{2,}/g, " ");
+          punctuationlessLine = _.replace(punctuationlessLine, /\./g, "");
+          punctuationlessLine = punctuationlessLine.toLocaleLowerCase();
 
           // remove all number
-          let numberless = _.replace(punctuationless, /[0-9]/g, '');
+          let numberlessLine = _.replace(punctuationlessLine, /[0-9]/g, '');
+          // remove whitespace before and after the words.
+          numberlessLine = _.trim(numberlessLine);
 
           // turn the line into an array.
           // *may have extra whitespaces in*
-          numberless = numberless.split(' ');
+          numberlessLine = numberlessLine.split(' ');
 
-          if (numberless && numberless.length !== 0 && numberless[0] !== '') {
-            initWordReference(numberless);
+          if (numberlessLine && numberlessLine.length !== 0 && numberlessLine[0] !== '') {
+            initWordReference(numberlessLine);
           }
 
-          // console.log(dictionary);
-          // console.log(hitCountTable);
-
-          // debugger;
         });
 
         lineReading.on('close', () => {
           this.wordReference = wordReference;
           this.wordCount = wordCount;
-          // this.hitCount = hitCount;
           resolve(true);
         });
 
@@ -165,6 +162,7 @@ class Dictionary {
 
   }
 }
+
 module.exports = Dictionary
 
 

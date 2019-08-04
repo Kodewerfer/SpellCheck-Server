@@ -28,12 +28,13 @@ app.use(express.json()); // to support JSON-encoded bodies
 let buildDefaultDictionary = async () => {
 
   let dicDefault = new Dictionary('./static/text_lib/corpus-challenge5.txt');
-  // let dicDefault = new Dictionary('./static/text_lib/1.text');
+  // let dicDefault = new Dictionary('./static/text_lib/test.txt');
 
   await dicDefault.buildDictionary();
   console.log('Default Dictionary built');
   global.Dictionaries = [dicDefault];
-}
+};
+
 buildDefaultDictionary();
 
 // request handler
@@ -41,9 +42,9 @@ let lookUpHandler = (req, res) => {
   console.log('request received.');
 
   // for GET and POST
-  let word = req.query.word||req.body.word;
+  let word = req.query.word || req.body.word;
   // shallow, indepth, thorough
-  let method = req.query.word||req.body.word;
+  let method = req.query.word || req.body.word;
 
   if (!method) {
     method = 'shallow'
