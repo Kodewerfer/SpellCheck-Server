@@ -85,6 +85,52 @@ let tryAdding = (word, ref) => {
 
 }
 
+let tryHyphens = (word, ref) => {
+
+  let results = {};
+
+  for (let index = 0; index <= word.length; index++) {
+
+    let arrWord = word.split('');
+    let letter = '-'
+
+    arrWord.splice(index, 0, letter);
+
+    let newWord = arrWord.join('');
+
+    if (ref[newWord] && !results[newWord]) {
+      results[newWord] = true;
+    }
+
+  }
+
+  return _.keys(results);
+
+}
+
+let tryApostrophe = (word, ref) => {
+
+  let results = {};
+
+  for (let index = 0; index <= word.length; index++) {
+
+    let arrWord = word.split('');
+    let letter = "'";
+
+    arrWord.splice(index, 0, letter);
+
+    let newWord = arrWord.join('');
+
+    if (ref[newWord] && !results[newWord]) {
+      results[newWord] = true;
+    }
+
+  }
+
+  return _.keys(results);
+
+}
+
 let tryAltSpelling = (word, ref) => {
 
   let results = {};
@@ -130,7 +176,11 @@ module.exports = {
 
       let altSpelling = tryAltSpelling(word, wordReference);
 
-      let candidates = _.uniq(_.concat(swaps, deletes, addings, altSpelling));
+      let hyphens = tryHyphens(word, wordReference);
+
+      let apostrophes = tryApostrophe(word, wordReference);
+
+      let candidates = _.uniq(_.concat(swaps, deletes, addings, altSpelling, hyphens, apostrophes));
 
       candidates = candidates.map((val, ind) => {
         return {

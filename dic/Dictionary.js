@@ -127,7 +127,7 @@ class Dictionary {
         lineReading.on('line', (data) => {
 
           // remove all punctuations
-          let punctuationlessLine = _.replace(data, /[\\\'\+\[\]\|<>?\-,\/#!$%\^&\*;:{}=\_`~()"“”]/g, "");
+          let punctuationlessLine = _.replace(data, /[\\\+\[\]\|<>?,\/#!$%\^&\*;:{}=\_`~()"“”]/g, "");
           punctuationlessLine = _.replace(punctuationlessLine, /\s{2,}/g, " ");
           punctuationlessLine = _.replace(punctuationlessLine, /\./g, "");
           punctuationlessLine = punctuationlessLine.toLocaleLowerCase();
