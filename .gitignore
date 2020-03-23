@@ -1,6 +1,5 @@
 /node_modules
-/.vscode
-package-lock.json
-yarn.lock
 testr.js
 static/text_lib/test.txt
+ecosystem.config.js
+Sp-Server
